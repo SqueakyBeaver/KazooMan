@@ -3,9 +3,7 @@ const config = require('./config');
 const { token } = require('./token.json');
 const fs = require('fs');
 
-if (token == "") {
-    token = process.env.TOKEN;
-}
+
 
 let bot = new Client({
     fetchAllMembers: true, // Remove this if the bot is in large guilds.
@@ -59,4 +57,8 @@ for (const file of eventFiles) {
 // });
 
 require('./server')();
-bot.login(token);
+if (token == "") {
+    bot.login(process.env.TOKEN);
+} else {
+    bot.login(token);
+}
