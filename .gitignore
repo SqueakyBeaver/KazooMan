@@ -2,3 +2,8 @@ node_modules/
 
 token.json
 .env
+
+# repl.it stuff
+.replit
+replit.nix
+.breakpoints
