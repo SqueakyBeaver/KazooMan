@@ -1,14 +1,20 @@
 {
   "dependencies": {
+    "@discordjs/builders": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
+    "axios": "^0.21.4",
+    "cheerio": "^1.0.0-rc.10",
     "discord-api-types": "^0.22.0",
-    "discord.js": "^13.1.0"
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "node-fetch": "^3.0.0",
+    "pretty": "^2.0.0"
   },
   "name": "kazooman",
   "description": "This is a discord bot written in [discord.js](https://github.com/discordjs/discord.js) because as much as I hate JavaScript, it's fast and also [Discord.py has ceased development](https://gist.github.com/Rapptz/4a2f62751b9600a31a0d3c78100287f1)",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "node index.js"
   },
