@@ -24,7 +24,7 @@ async function getDailyHolidays(day, month, year) {
 }
 
 async function sendDailyHolidays(client) {
-    const channel = client.channels.cache.get('767843340137529397');
+    const channel = client.channels.cache.get('875120528409632818');
 
     const holidays = await getDailyHolidays(
         send_date.getDate(),
