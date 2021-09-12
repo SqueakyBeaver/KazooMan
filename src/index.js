@@ -3,8 +3,6 @@ const config = require('./config');
 const { token } = require('./token.json');
 const fs = require('fs');
 
-
-
 let bot = new Client({
     fetchAllMembers: true, // Remove this if the bot is in large guilds.
     intents: [Intents.FLAGS.GUILDS], // Discord...
@@ -18,7 +16,9 @@ let bot = new Client({
 });
 
 bot.commands = new Collection();
-const commandFiles = fs.readdirSync('src/commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs
+    .readdirSync('src/commands')
+    .filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -27,7 +27,9 @@ for (const file of commandFiles) {
     bot.commands.set(command.data.name, command);
 }
 
-const eventFiles = fs.readdirSync('src/events').filter(file => file.endsWith('.js'));
+const eventFiles = fs
+    .readdirSync('src/events')
+    .filter((file) => file.endsWith('.js'));
 
 for (const file of eventFiles) {
     const event = require(`./events/${file}`);
@@ -57,7 +59,7 @@ for (const file of eventFiles) {
 // });
 
 require('./server')();
-if (token == "") {
+if (token == '') {
     bot.login(process.env.TOKEN);
 } else {
     bot.login(token);
