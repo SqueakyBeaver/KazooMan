@@ -24,55 +24,57 @@ async function getDailyHolidays(day, month, year) {
     }
 }
 
-async function sendDailyMessages(client) {
-    // Testing
-    // const channel = client.channels.cache.get('637316663267819561');
-    // "Production"
-    const channel = client.channels.cache.get('875120528409632818');
+async function sendDailyMessages(client, channel) {
     send_date = new Date(Date.now() + 3600000 * -5);
 
-    const holidays = await getDailyHolidays(
-        send_date.getDate(),
-        send_date.getMonth() + 1,
-        send_date.getFullYear()
-    );
+    try {
+        const holidays = await getDailyHolidays(
+            send_date.getDate(),
+            send_date.getMonth() + 1,
+            send_date.getFullYear()
+        );
 
-    const qotd = await getDailyQuote(
-        send_date.getDate(),
-        send_date.getMonth(),
-        send_date.getFullYear()
-    );
+        const qotd = await getDailyQuote(
+            send_date.getDate(),
+            send_date.getMonth(),
+            send_date.getFullYear()
+        );
 
-    let holiday_str = '';
-    holidays.forEach((holiday) => {
-        holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
-    });
-    console.log(qotd);
+        let holiday_str = '';
+        holidays.forEach((holiday) => {
+            holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
+        });
+        console.log(qotd);
 
-    channel
-        .send({
+        channel
+            .send({
+                embeds: [
+                    new MessageEmbed()
+                        .setTitle(`Holidays for ${send_date.toDateString()}`)
+                        .setDescription(holiday_str)
+                        .setColor('RANDOM'),
+                ],
+            })
+            .then((message) => {
+                message.crospost;
+                message.startThread({ name: 'Holiday Discussion' });
+            })
+            .catch(console.error);
+
+        channel.send({
             embeds: [
                 new MessageEmbed()
-                    .setTitle(`Holidays for ${send_date.toDateString()}`)
-                    .setDescription(holiday_str)
+                    .setTitle(
+                        `Quote of the day for ${send_date.toDateString()}`
+                    )
+                    .setDescription(qotd.quote)
+                    .setFooter(`By: ${qotd.author}`)
                     .setColor('RANDOM'),
             ],
-        })
-        .then((message) => {
-            message.crospost;
-            message.startThread({ name: 'Holiday Discussion' });
-        })
-        .catch(console.error);
-
-    channel.send({
-        embeds: [
-            new MessageEmbed()
-                .setTitle(`Quote of the day for ${send_date.toDateString()}`)
-                .setDescription(qotd.quote)
-                .setFooter(`By: ${qotd.author}`)
-                .setColor('RANDOM'),
-        ],
-    });
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 // Get the daily quote from en.wikiquote.org
@@ -115,4 +117,6 @@ async function getDailyQuote(day, month, year) {
 
 module.exports = {
     sendDailyMessages,
+    getDailyQuote,
+    getDailyHolidays,
 };
