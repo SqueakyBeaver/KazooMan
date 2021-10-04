@@ -45,5 +45,5 @@ async function publishCommands() {
     }
 }
 
-// publishCommands();
-testCommands();
+publishCommands();
+// testCommands();

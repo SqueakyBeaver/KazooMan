@@ -15,7 +15,7 @@ async function send_it(client) {
                 (m) => m.author.id === '638201264080945162'
             );
             exit =
-                sent_by_self.first().createdAt.getDate() >=
+                sent_by_self.first().createdAt.getDate() ===
                 new Date(Date.now() + 3600000 * -5).getDate();
         })
         .catch(console.error);
