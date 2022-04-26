@@ -5,7 +5,7 @@ async function send_it(client) {
     // Testing
     // const channel = client.channels.cache.get('637316663267819561');
     // "Production"
-    console.log('I\'m in');
+    console.log("I'm in");
     const channel = client.channels.cache.get('875120528409632818');
     let exit = false;
     await channel.messages

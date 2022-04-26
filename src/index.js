@@ -5,7 +5,7 @@ const fs = require('fs');
 
 let bot = new Client({
     fetchAllMembers: true, // Remove this if the bot is in large guilds.
-    intents: [Intents.FLAGS.GUILDS], // Discord...
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES], // Discord...
     presence: {
         status: 'online',
         activity: {

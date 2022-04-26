@@ -1,4 +1,4 @@
-const fs = require('fs');
+const { readdirSync } = require('fs');
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -6,9 +6,9 @@ const { clientId, guildId } = require('./config.json');
 const { token } = require('./token.json');
 
 const commands = [];
-const commandFiles = fs
-    .readdirSync('src/commands')
-    .filter((file) => file.endsWith('.js'));
+const commandFiles = readdirSync('src/commands').filter((file) =>
+    file.endsWith('.js')
+);
 
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -24,6 +24,7 @@ async function testCommands() {
         await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
             body: commands,
         });
+        console.log(commands)
 
         console.log('Successfully reloaded application (/) commands.');
     } catch (error) {
@@ -45,5 +46,5 @@ async function publishCommands() {
     }
 }
 
-publishCommands();
-// testCommands();
+// publishCommands();
+testCommands();
