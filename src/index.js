@@ -25,7 +25,7 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     // Set a new item in the Collection
     // with the key as the command name and the value as the exported module
-    bot.commands_list.set(command.data.name, command);
+    bot.commands_list.set(command?.data?.name, command);
 }
 
 const eventFiles = fs
