@@ -3,3 +3,5 @@ This is a discord bot written in [discord.js](https://github.com/discordjs/disco
 
 # Contributing
 I mean, you can if you want, but don't expect anything
+
+I know it has hard-coded values, but I cannot be assed to use proper databases for a personal bot

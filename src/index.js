@@ -3,7 +3,7 @@ const config = require('./config');
 const { token } = require('./token.json');
 const fs = require('fs');
 
-let bot = new Client({
+global.bot = new Client({
     fetchAllMembers: true, // Remove this if the bot is in large guilds.
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES], // Discord...
     presence: {
@@ -15,7 +15,8 @@ let bot = new Client({
     },
 });
 
-bot.commands = new Collection();
+
+bot.commands_list = new Collection();
 const commandFiles = fs
     .readdirSync('src/commands')
     .filter((file) => file.endsWith('.js'));
@@ -24,7 +25,7 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     // Set a new item in the Collection
     // with the key as the command name and the value as the exported module
-    bot.commands.set(command.data.name, command);
+    bot.commands_list.set(command.data.name, command);
 }
 
 const eventFiles = fs
@@ -46,7 +47,7 @@ for (const file of eventFiles) {
 //     // If it's not a command, do nothing
 //     if (!interaction.isCommand()) return;
 
-//     const command = bot.commands.get(interaction.commandName);
+//     const command = bot.commands_list.get(interaction.commandName);
 
 //     if (!command) return;
 

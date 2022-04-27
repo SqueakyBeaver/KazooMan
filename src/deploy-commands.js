@@ -10,9 +10,10 @@ const commandFiles = readdirSync('src/commands').filter((file) =>
     file.endsWith('.js')
 );
 
+
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
-    commands.push(command.data.toJSON());
+    const new_command = require(`./commands/${file}`);
+    commands.push(new_command.data?.toJSON());
 }
 
 const rest = new REST({ version: '9' }).setToken(token);
@@ -46,5 +47,5 @@ async function publishCommands() {
     }
 }
 
-// publishCommands();
+publishCommands();
 testCommands();
