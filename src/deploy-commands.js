@@ -13,7 +13,11 @@ const commandFiles = readdirSync('src/commands').filter((file) =>
 
 for (const file of commandFiles) {
     const new_command = require(`./commands/${file}`);
-    commands.push(new_command.data?.toJSON());
+    try {
+    commands.push(new_command.data.toJSON());
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const rest = new REST({ version: '9' }).setToken(token);
