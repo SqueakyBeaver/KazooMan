@@ -1,20 +1,20 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const { MessageEmbed } = require('discord.js');
+import axios from 'axios';
+import Cheerio from 'cheerio';
+import { MessageEmbed } from 'discord.js';
 
-async function getDailyHolidays(day, month, year) {
+async function getDailyHolidays(day: number, month: number, year: number) {
     try {
         const data = await axios.get(
             `https://www.checkiday.com/${month}/${day}/${year}/`
         );
-        const $ = cheerio.load(data.data);
+        const $ = Cheerio.load(data.data);
         const results = $('#magicGrid .mdl-card__title-text > a');
 
         const holidays = [];
         for (let i = 0; i < results.length; ++i) {
             holidays.push({
                 link: results[i].attribs.href,
-                name: results[i].children[0].data,
+                name: results[i].name,
             });
         }
 
@@ -24,8 +24,8 @@ async function getDailyHolidays(day, month, year) {
     }
 }
 
-async function sendDailyMessages(client, channel) {
-    send_date = new Date(Date.now() + 3600000 * -5);
+async function sendDailyMessages(client: any, channel: any) {
+    let send_date = new Date(Date.now() + 3600000 * -5);
 
     try {
         const holidays = await getDailyHolidays(
@@ -41,7 +41,7 @@ async function sendDailyMessages(client, channel) {
         );
 
         let holiday_str = '';
-        holidays.forEach((holiday) => {
+        holidays?.forEach((holiday) => {
             holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
         });
         console.log(qotd);
@@ -55,7 +55,7 @@ async function sendDailyMessages(client, channel) {
                         .setColor('RANDOM'),
                 ],
             })
-            .then((message) => {
+            .then((message: any) => {
                 message.crospost;
                 message.startThread({ name: 'Holiday Discussion' });
             })
@@ -78,7 +78,7 @@ async function sendDailyMessages(client, channel) {
 }
 
 // Get the daily quote from en.wikiquote.org
-async function getDailyQuote(day, month, year) {
+async function getDailyQuote(day: number, month: number, year: number) {
     const months = [
         'January',
         'February',
@@ -97,7 +97,7 @@ async function getDailyQuote(day, month, year) {
     const data = await axios.get(
         `https://en.wikiquote.org/wiki/Wikiquote:Quote_of_the_day/${months[month]}_${year}`
     );
-    const $ = cheerio.load(data.data);
+    const $ = Cheerio.load(data.data);
 
     const content = $(`dl > dt > a[title="${months[month]} ${day}"]`)
         .parents('dl')
@@ -115,7 +115,7 @@ async function getDailyQuote(day, month, year) {
     };
 }
 
-module.exports = {
+export {
     sendDailyMessages,
     getDailyQuote,
     getDailyHolidays,

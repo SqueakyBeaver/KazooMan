@@ -1,15 +1,15 @@
-const { MessageEmbed } = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { getDailyHolidays, getDailyQuote } = require('../daily.js');
+import { MessageEmbed } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { getDailyHolidays, getDailyQuote } from '../daily.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('test_daily')
         .setDescription('Test Daily stuff'),
-    async execute(interaction) {
-        send_date = new Date(Date.now() + 3600000 * -5);
+    async execute(interaction: any) {
+        let send_date: any = new Date(Date.now() + 3600000 * -5);
 
-        const holidays = await getDailyHolidays(
+        const holidays: any = await getDailyHolidays(
             send_date.getDate(),
             send_date.getMonth() + 1,
             send_date.getFullYear()
@@ -22,7 +22,7 @@ module.exports = {
         );
 
         let holiday_str = '';
-        holidays.forEach((holiday) => {
+        holidays.forEach((holiday: any) => {
             holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
         });
 

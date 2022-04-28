@@ -1,7 +1,7 @@
-const { Client, MessageEmbed } = require('discord.js');
-const { sendDailyMessages } = require('../daily.js');
+import { Client, MessageEmbed } from 'discord.js';
+import { sendDailyMessages } from '../daily.js';
 
-async function send_it(client) {
+async function send_it(client: any) {
     // Testing
     // const channel = client.channels.cache.get('637316663267819561');
     // "Production"
@@ -10,9 +10,9 @@ async function send_it(client) {
     let exit = false;
     await channel.messages
         .fetch()
-        .then(function (messages) {
-            sent_by_self = messages.filter(
-                (m) => m.author.id === '638201264080945162'
+        .then(function (messages: any) {
+            let sent_by_self = messages.filter(
+                (m: any) => m.author.id === '638201264080945162'
             );
             exit =
                 sent_by_self.first().createdAt.getDate() ===
@@ -20,7 +20,7 @@ async function send_it(client) {
         })
         .catch(console.error);
 
-    if (exit === true) {
+    if (exit) {
         return; // Don't judge me
     }
 
@@ -33,7 +33,7 @@ async function send_it(client) {
 module.exports = {
     name: 'ready',
     once: true,
-    async execute(client) {
+    async execute(client: any) {
         console.log(`Ready! Logged in as ${client.user.tag}`);
         setInterval(send_it, 600000, client);
     },

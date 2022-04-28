@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction } from 'discord.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -10,7 +11,7 @@ module.exports = {
                 .setDescription('The input to echo back')
                 .setRequired(true)
         ),
-    async execute(interaction) {
-        interaction.reply(interaction.options.getString('input'));
+    async execute(interaction: CommandInteraction) {
+        interaction.reply({content: interaction.options.getString('input')});
     },
 };

@@ -1,8 +1,8 @@
 // TODO: INTEGRATE A SERVER-SPECIFIC DATABASE
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-// const { bot } = require('../index');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { MessageEmbed } from 'discord.js';
+import { bot } from '../index';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,7 +19,7 @@ module.exports = {
                 .setName('user')
                 .setDescription('The user to report')
         ),
-    async execute(interaction) {
+    async execute(interaction: any) {
         const user = interaction.options.getUser('user');
         const desc = interaction.options.getString('desc');
         const report_embed = new MessageEmbed()

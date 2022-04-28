@@ -1,13 +1,13 @@
-const {
+import {
     createAudioPlayer,
     createAudioResource,
     getVoiceConnection,
     VoiceConnectionStatus,
     StreamType,
-} = require('@discordjs/voice');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const say = require('say');
-const { createReadStream } = require('fs');
+} from '@discordjs/voice';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import say from 'say';
+import { createReadStream } from 'fs';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,9 +25,9 @@ module.exports = {
                 .setDescription('The speed of the words')
                 .setRequired(false)
         ),
-    async execute(interaction) {
+    async execute(interaction: any) {
         await interaction.reply(`Saying ${interaction.options.getString('words')}`);
-        const connection = getVoiceConnection(interaction.guild.id);
+        const connection: any = getVoiceConnection(interaction.guild.id);
         try {
             if (connection.status === VoiceConnectionStatus.Disconnected) {
                 return interaction.reply({ content: 'I am not connected to a voice channel', ephemeral: true });
