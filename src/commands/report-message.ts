@@ -2,9 +2,11 @@ import { MessageEmbed } from 'discord.js';
 import { bot } from '../index';
 
 module.exports = {
-    // As of writing, the built-in class does not let me set a type
-    name: 'Report Message',
-    type: 3, // MESSAGE === 3
+    data: {
+        // As of writing, the built-in class does not let me set a type
+        name: 'Report Message',
+        type: 3, // MESSAGE === 3
+    },
 
     async execute(interaction: any) {
         const user = interaction.targetMessage.author;

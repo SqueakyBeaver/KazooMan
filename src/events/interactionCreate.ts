@@ -4,6 +4,7 @@ import { Interaction } from 'discord.js';
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction: Interaction) {    // Slash Command Handling
+        console.log('handling interactions');
         if (interaction.isCommand()) {
             // await interaction.deferReply({ ephemeral: false }).catch(() => { });
 
@@ -21,7 +22,6 @@ module.exports = {
                     });
                 } else if (option.value) args.push(option.value);
             }
-            // interaction.member = interaction.guild?.members.cache.get(interaction.user.id);
 
             try {
                 await cmd.execute(interaction);
