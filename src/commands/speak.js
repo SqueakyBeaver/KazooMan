@@ -1,15 +1,13 @@
-const {
+import {
     createAudioPlayer,
     createAudioResource,
     getVoiceConnection,
     VoiceConnectionStatus,
-    StreamType,
-} = require('@discordjs/voice');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const say = require('say');
-const { createReadStream } = require('fs');
+} from '@discordjs/voice';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import say from 'say';
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('speak')
         .setDescription('Make the bot say something in the voice channel')

@@ -1,9 +1,9 @@
-const { ContextMenuCommandBuilder } = require('@discordjs/builders');
-const { ApplicationCommandType } = require('discord-api-types/v9');
+const { ContextMenuCommandBuilder } from '@discordjs/builders');
+const { ApplicationCommandType } from 'discord-api-types/v9');
 
-// const { bot } = require('../index');
+// const { bot } from '../index');
 
-module.exports = {
+export default {
     // data: new ContextMenuCommandBuilder()
     //     .setName('report')
     //     .setType(ApplicationCommandType.Message),

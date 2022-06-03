@@ -1,8 +1,12 @@
 // For repl.it
-const app = require('express')();
+import express from 'express';
 
-app.get('/', (req, res) => res.send('Server is up.'));
 
-module.exports = () => {
+
+export function server() {
+    const app = express();
+    app.get('/', (req, res) => res.send('Server is up.'));
+    
     app.listen(3000);
-};
+}
+

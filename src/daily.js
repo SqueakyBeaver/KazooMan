@@ -1,6 +1,6 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const { MessageEmbed } = require('discord.js');
+import axios from 'axios';
+import * as cheerio from 'cheerio';
+import { MessageEmbed } from 'discord.js';
 
 async function getDailyHolidays(day, month, year) {
     try {
@@ -14,66 +14,13 @@ async function getDailyHolidays(day, month, year) {
         for (let i = 0; i < results.length; ++i) {
             holidays.push({
                 link: results[i].attribs.href,
-                name: results[i].children[0].data,
+                name: cheerio.text(results[i].children[0]),
             });
         }
 
         return holidays;
     } catch (error) {
         console.log(error);
-    }
-}
-
-async function sendDailyMessages(client, channel) {
-    send_date = new Date(Date.now() + 3600000 * -5);
-
-    try {
-        const holidays = await getDailyHolidays(
-            send_date.getDate(),
-            send_date.getMonth() + 1,
-            send_date.getFullYear()
-        );
-
-        const qotd = await getDailyQuote(
-            send_date.getDate(),
-            send_date.getMonth(),
-            send_date.getFullYear()
-        );
-
-        let holiday_str = '';
-        holidays.forEach((holiday) => {
-            holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
-        });
-        console.log(qotd);
-
-        channel
-            .send({
-                embeds: [
-                    new MessageEmbed()
-                        .setTitle(`Holidays for ${send_date.toDateString()}`)
-                        .setDescription(holiday_str)
-                        .setColor('RANDOM'),
-                ],
-            })
-            .then((message) => {
-                message.crospost;
-                message.startThread({ name: 'Holiday Discussion' });
-            })
-            .catch(console.error);
-
-        channel.send({
-            embeds: [
-                new MessageEmbed()
-                    .setTitle(
-                        `Quote of the day for ${send_date.toDateString()}`
-                    )
-                    .setDescription(qotd.quote)
-                    .setFooter(`By: ${qotd.author}`)
-                    .setColor('RANDOM'),
-            ],
-        });
-    } catch (error) {
-        console.error(error);
     }
 }
 
@@ -115,7 +62,60 @@ async function getDailyQuote(day, month, year) {
     };
 }
 
-module.exports = {
+async function sendDailyMessages(client, channel) {
+    const send_date = new Date(Date.now() + 3600000 * -5);
+
+    try {
+        const holidays = await getDailyHolidays(
+            send_date.getDate(),
+            send_date.getMonth() + 1,
+            send_date.getFullYear()
+        );
+
+        const qotd = await getDailyQuote(
+            send_date.getDate(),
+            send_date.getMonth(),
+            send_date.getFullYear()
+        );
+
+        let holiday_str = '';
+        holidays?.forEach((holiday) => {
+            holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
+        });
+        console.log(qotd);
+
+        channel
+            .send({
+                embeds: [
+                    new MessageEmbed()
+                        .setTitle(`Holidays for ${send_date.toDateString()}`)
+                        .setDescription(holiday_str)
+                        .setColor('RANDOM'),
+                ],
+            })
+            .then((message) => {
+                message.crospost();
+                message.startThread({ name: 'Holiday Discussion' });
+            })
+            .catch(console.error);
+
+        channel.send({
+            embeds: [
+                new MessageEmbed()
+                    .setTitle(
+                        `Quote of the day for ${send_date.toDateString()}`
+                    )
+                    .setDescription(qotd.quote)
+                    .setFooter({text: `By: ${qotd.author}`})
+                    .setColor('RANDOM'),
+            ],
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export default {
     sendDailyMessages,
     getDailyQuote,
     getDailyHolidays,

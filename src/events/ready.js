@@ -1,5 +1,4 @@
-const { Client, MessageEmbed } = require('discord.js');
-const { sendDailyMessages } = require('../daily.js');
+import { sendDailyMessages } from '../daily.js';
 
 async function send_it(client) {
     // Testing
@@ -11,7 +10,7 @@ async function send_it(client) {
     await channel.messages
         .fetch()
         .then(function (messages) {
-            sent_by_self = messages.filter(
+            const sent_by_self = messages.filter(
                 (m) => m.author.id === '638201264080945162'
             );
             exit =
@@ -30,7 +29,7 @@ async function send_it(client) {
     }
 }
 
-module.exports = {
+export default {
     name: 'ready',
     once: true,
     async execute(client) {

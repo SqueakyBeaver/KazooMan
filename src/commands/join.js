@@ -1,13 +1,12 @@
-const {
+import {
     joinVoiceChannel,
     createAudioPlayer,
     createAudioResource,
-} = require('@discordjs/voice');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const say = require('say');
-const fs = require('fs');
+} from '@discordjs/voice';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import say from 'say';
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('join')
         .setDescription('Join a voice channel for tts')

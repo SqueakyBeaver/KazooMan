@@ -1,10 +1,10 @@
 // TODO: INTEGRATE A SERVER-SPECIFIC DATABASE
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-// const { bot } = require('../index');
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { MessageEmbed } from 'discord.js';
+import { bot } from '../index';
 
-module.exports = {
+export default {
     data: new SlashCommandBuilder()
         .setName('report')
         .setDescription('report a message or user')

@@ -1,9 +1,8 @@
-const { readdirSync } = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const { clientId, guildId } = require('./config.json');
-const { token } = require('./token.json');
+import { readdirSync } from 'fs';
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
+import { clientId, guildId } from './config.json';
+import { token } from './token.json';
 
 const commands = [];
 const commandFiles = readdirSync('src/commands').filter((file) =>
@@ -12,7 +11,7 @@ const commandFiles = readdirSync('src/commands').filter((file) =>
 
 
 for (const file of commandFiles) {
-    const new_command = require(`./commands/${file}`);
+    const new_command = `./commands/${file}`;
     try {
     commands.push(new_command.data.toJSON());
     } catch (error) {

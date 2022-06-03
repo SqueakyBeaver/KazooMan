@@ -1,8 +1,8 @@
-const { ContextMenuCommandBuilder } = require('@discordjs/builders');
-const { ApplicationCommandType } = require('discord-api-types/v9');
+// import { ContextMenuCommandBuilder } from '@discordjs/builders');
+// import { ApplicationCommandType } from 'discord-api-types/v9');
 
 
-module.exports = {
+// export default {
     // data: new ContextMenuCommandBuilder()
     //     .setName('report')
     //     .setType(ApplicationCommandType.USER),
@@ -28,4 +28,4 @@ module.exports = {
 
     //     interaction.reply({ content: 'Your report has been sent to the moderators', ephemeral: true });
     // },
-};
+// };
