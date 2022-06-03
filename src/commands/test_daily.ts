@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: REWORK THIS
 import { MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { getDailyHolidays, getDailyQuote } from '../daily.js';
@@ -7,7 +9,7 @@ module.exports = {
         .setName('test_daily')
         .setDescription('Test Daily stuff'),
     async execute(interaction: any) {
-        let send_date: any = new Date(Date.now() + 3600000 * -5);
+        const send_date: any = new Date(Date.now() + 3600000 * -5);
 
         const holidays: any = await getDailyHolidays(
             send_date.getDate(),

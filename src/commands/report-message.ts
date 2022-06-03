@@ -1,4 +1,4 @@
-import { MessageEmbed } from 'discord.js';
+import { MessageContextMenuInteraction, MessageEmbed } from 'discord.js';
 import { bot } from '../index';
 
 module.exports = {
@@ -8,9 +8,9 @@ module.exports = {
         type: 3, // MESSAGE === 3
     },
 
-    async execute(interaction: any) {
+    async execute(interaction: MessageContextMenuInteraction) {
         const user = interaction.targetMessage.author;
-        const message = interaction.targetMessage.cleanContent;
+        const message = interaction.targetMessage.content;
         const report_embed = new MessageEmbed()
             .setTitle('Message Report')
             .addField('Message', `${message}`)
@@ -19,6 +19,7 @@ module.exports = {
                 `${user.username}#${user.discriminator}`
             );
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let report_channel: any = interaction.channel;
         if ('767843340137529394' == interaction.guild?.id) {
             report_channel = await bot.channels.cache.get('968670619371716628');

@@ -1,7 +1,7 @@
 // TODO: INTEGRATE A SERVER-SPECIFIC DATABASE
 
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { MessageEmbed } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { bot } from '../index';
 
 module.exports = {
@@ -19,16 +19,17 @@ module.exports = {
                 .setName('user')
                 .setDescription('The user to report')
         ),
-    async execute(interaction: any) {
+    async execute(interaction: CommandInteraction) {
         const user = interaction.options.getUser('user');
         const desc = interaction.options.getString('desc');
         const report_embed = new MessageEmbed()
             .setTitle('Report')
             .addField('Description', `${desc}`)
-            .addField('Reported User', `${user.username}#${user.discriminator}`)
+            .addField('Reported User', `${user?.username}#${user?.discriminator}`);
 
-        let report_channel = interaction.channel
-        if ('767843340137529394' == interaction.guild.id) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let report_channel: any = interaction.channel;
+        if ('767843340137529394' == interaction.guild?.id) {
             report_channel = await bot.channels.cache.get('968670619371716628');
         } else {
             report_channel = interaction.channel;

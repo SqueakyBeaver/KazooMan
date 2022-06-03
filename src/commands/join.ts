@@ -5,7 +5,6 @@ import {
 } from '@discordjs/voice';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import say from 'say';
-import fs from 'fs';
 import { CommandInteraction } from 'discord.js';
 
 module.exports = {
@@ -19,8 +18,9 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction: CommandInteraction) {
-        await interaction.reply("All right!");
+        await interaction.reply('All right!');
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const channel: any = interaction.options.getChannel('voice_channel');
         const connection = joinVoiceChannel({
             channelId: channel.id,
@@ -29,9 +29,9 @@ module.exports = {
         });
 
         const player = createAudioPlayer();
-        say.export('Abrbrbrbrbrbrbbrbrbrbrbrbbr', undefined, 1.5, 'intro.wav', (err:any) => {
-            if (err) {
-                console.error(err);
+        say.export('Abrbrbrbrbrbrbbrbrbrbrbrbbr', undefined, 1.5, 'intro.wav', (_err) => {
+            if (_err) {
+                console.error(_err);
             }
         });
         const resource = createAudioResource('intro.wav');

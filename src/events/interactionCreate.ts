@@ -8,14 +8,15 @@ module.exports = {
         if (interaction.isCommand()) {
             // await interaction.deferReply({ ephemeral: false }).catch(() => { });
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const cmd: any = commands.get(interaction.commandName);
             if (!cmd)
-                return interaction.followUp({ content: "An error has occured " });
+                return interaction.followUp({ content: 'An error has occured ' });
             
             const args = [];
 
-            for (let option of interaction.options.data) {
-                if (option.type === "SUB_COMMAND") {
+            for (const option of interaction.options.data) {
+                if (option.type === 'SUB_COMMAND') {
                     if (option.name) args.push(option.name);
                     option.options?.forEach((x) => {
                         if (x.value) args.push(x.value);
@@ -37,8 +38,10 @@ module.exports = {
         // Context Menu Handling
         if (interaction.isContextMenu()) {
             await interaction.deferReply({ ephemeral: false });
+            // I don't actually know what type this is
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const cmd: any = commands.get(interaction.commandName);
             if (cmd) cmd.execute(interaction);
         }
     },
-}
+};

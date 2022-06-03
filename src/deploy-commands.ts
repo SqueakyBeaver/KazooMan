@@ -1,12 +1,13 @@
-import { readdirSync } from 'fs';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { clientId, guildId } from './config.json';
 import { token } from './token.json';
 
-const commandFiles = readdirSync('src/commands').filter((file) =>
-    file.endsWith('.js')
-);
+// const commandFiles = readdirSync('src/commands').filter((file) =>
+//     file.endsWith('.js')
+// );
 
 // I find this easier to do than a for loop
 const commands = [
@@ -31,7 +32,7 @@ async function testCommands() {
         await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
             body: commands,
         });
-        console.log(commands)
+        console.log(commands);
 
         return console.log('Successfully reloaded application (/) commands.');
     } catch (error) {

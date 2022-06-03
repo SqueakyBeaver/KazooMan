@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Client, Collection, Intents } from 'discord.js';
 import { token } from './token.json';
 import { readdirSync } from 'fs';
@@ -9,10 +10,10 @@ const bot = new Client({
         activities: [
             {
                 name: 'HJONK',
-                type: 'PLAYING',
-            },
-        ],
-    },
+                type: 'PLAYING'
+            }
+        ]
+    }
 });
 
 // I find this easier to do than a for loop
@@ -46,7 +47,7 @@ for (const file of eventFiles) {
 
 // require('./server')();
 
-if (token == '') {
+if (token === '') {
     bot.login(process.env.TOKEN);
 } else {
     bot.login(token);

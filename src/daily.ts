@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cheerio from 'cheerio';
-import { MessageEmbed } from 'discord.js';
+import { Client, Message, MessageEmbed, TextChannel } from 'discord.js';
 
 async function getDailyHolidays(day: number, month: number, year: number) {
     try {
@@ -24,8 +24,8 @@ async function getDailyHolidays(day: number, month: number, year: number) {
     }
 }
 
-async function sendDailyMessages(client: any, channel: any) {
-    let send_date = new Date(Date.now() + 3600000 * -5);
+async function sendDailyMessages(client: Client, channel: TextChannel) {
+    const send_date = new Date(Date.now() + 3600000 * -5);
 
     try {
         const holidays = await getDailyHolidays(
@@ -55,8 +55,8 @@ async function sendDailyMessages(client: any, channel: any) {
                         .setColor('RANDOM'),
                 ],
             })
-            .then((message: any) => {
-                message.crospost;
+            .then((message: Message) => {
+                message.crosspost;
                 message.startThread({ name: 'Holiday Discussion' });
             })
             .catch(console.error);
