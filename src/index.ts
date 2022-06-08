@@ -19,7 +19,7 @@ const bot = new Client({
 // I find this easier to do than a for loop
 const commands = new Collection();
 
-const commandFiles = readdirSync('src/commands').filter((file) =>
+const commandFiles = readdirSync('gen/commands').filter((file) =>
     file.endsWith('.js')
 );
 
@@ -32,7 +32,7 @@ for (const file of commandFiles) {
 
 export { bot, commands };
 
-const eventFiles = readdirSync('src/events').filter((file) =>
+const eventFiles = readdirSync('gen/events').filter((file) =>
     file.endsWith('.js')
 );
 

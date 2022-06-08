@@ -3,7 +3,7 @@
 import express from 'express';
 
 const app: express.Application = express();
-app.get('/', (_req, _res) => _res.send('Server is up.'));
+app.get('/', (_req: any, _res: any) => _res.send('Server is up.'));
 
 module.exports = () => {
     app.listen(3000);
