@@ -2,6 +2,7 @@
 
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
+
 import { bot } from '../index';
 
 module.exports = {
@@ -39,6 +40,6 @@ module.exports = {
         const me = await bot.users.fetch('557273716782923820');
         me.send({ embeds: [report_embed.addField('Sent By', `${interaction.user.username}#${interaction.user.discriminator}`)] });
 
-        interaction.reply({ content: 'Your report has been sent to the moderators', ephemeral: true });
+        interaction.followUp({ content: 'Your report has been sent to the moderators', ephemeral: true });
     },
 };

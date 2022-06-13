@@ -17,13 +17,12 @@ const commands = [
     require('./commands/ping.js').data.toJSON(),
     require('./commands/report-message.js').data,
     require('./commands/report-slash.js').data.toJSON(),
-    require('./commands/report-user.js').data,
     require('./commands/speak.js').data.toJSON(),
     require('./commands/test_daily.js').data.toJSON(),
 ];
 
 
-const rest = new REST({ version: '9' }).setToken(token);
+const rest = new REST({ version: '10' }).setToken(token);
 
 async function testCommands() {
     try {

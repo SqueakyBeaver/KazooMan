@@ -1,12 +1,12 @@
-import { commands } from '../index.js';
 import { Interaction } from 'discord.js';
+import { commands } from '../index.js';
 
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction: Interaction) {    // Slash Command Handling
         console.log('handling interactions');
         if (interaction.isCommand()) {
-            // await interaction.deferReply({ ephemeral: false }).catch(() => { });
+            await interaction.deferReply({ ephemeral: false }).catch(console.error);
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const cmd: any = commands.get(interaction.commandName);
@@ -28,20 +28,23 @@ module.exports = {
                 await cmd.execute(interaction);
             } catch (error) {
                 console.error(error);
-                await interaction.reply({
+                await interaction.followUp({
                     content: 'There was an error trying to execute that command!',
                     ephemeral: true,
                 });
             }
         }
-
         // Context Menu Handling
         if (interaction.isContextMenu()) {
-            await interaction.deferReply({ ephemeral: false });
+            await interaction.deferReply({ ephemeral: true })
+                .then(console.log)
+                .catch(console.error);
             // I don't actually know what type this is
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const cmd: any = commands.get(interaction.commandName);
-            if (cmd) cmd.execute(interaction);
+            if (cmd) {
+                await cmd.execute(interaction);
+            }
         }
     },
 };

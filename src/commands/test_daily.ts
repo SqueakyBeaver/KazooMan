@@ -39,6 +39,6 @@ module.exports = {
             .setFooter(`By: ${qotd.author}`)
             .setColor('RANDOM');
 
-        await interaction.reply({ embeds: [holidayEmbed, quoteEmbed] });
+        await interaction.followUp({ embeds: [holidayEmbed, quoteEmbed] });
     },
 };

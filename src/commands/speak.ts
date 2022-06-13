@@ -26,15 +26,15 @@ module.exports = {
                 .setRequired(false)
         ),
     async execute(interaction: CommandInteraction) {
-        await interaction.reply(`Saying ${interaction.options.getString('words')}`);
+        await interaction.followUp(`Saying ${interaction.options.getString('words')}`);
         const connection: VoiceConnection | undefined = getVoiceConnection(String(interaction.guild?.id));
         try {
             if (connection?.state.status === VoiceConnectionStatus.Disconnected) {
-                return interaction.reply({ content: 'I am not connected to a voice channel', ephemeral: true });
+                return interaction.followUp({ content: 'I am not connected to a voice channel', ephemeral: true });
             }
         } catch (error) {
             console.error(error);
-            return interaction.reply('Unable to Speak');
+            return interaction.followUp('Unable to Speak');
         }
         say.export(String(interaction.options.getString('words')), 'Microsoft Dan Desktop',Number(interaction.options.getNumber('speed')), 'spoken.ogg', (err) => {
             if (err) {

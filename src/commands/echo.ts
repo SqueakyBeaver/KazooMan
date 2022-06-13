@@ -12,6 +12,6 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction: CommandInteraction) {
-        interaction.reply({content: interaction.options.getString('input')});
+        interaction.followUp({content: interaction.options.getString('input')});
     },
 };

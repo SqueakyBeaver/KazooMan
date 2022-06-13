@@ -6,7 +6,7 @@ module.exports = {
         .setName('beep')
         .setDescription('Replies with Boop!'),
     async execute(interaction: CommandInteraction) {
-        await interaction.reply('Boop!');
+        await interaction.followUp('Boop!');
         console.log(interaction.client.listeners('messageCreate'));
     },
 };

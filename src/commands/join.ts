@@ -18,7 +18,7 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction: CommandInteraction) {
-        await interaction.reply('All right!');
+        await interaction.followUp('All right!');
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const channel: any = interaction.options.getChannel('voice_channel');

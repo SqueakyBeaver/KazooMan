@@ -37,7 +37,7 @@
 //             ],
 //         });
 
-//         interaction.reply({
+//         interaction.followUp({
 //             content: 'Your report has been sent to the moderators',
 //             ephemeral: true,
 //         });
