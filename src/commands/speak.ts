@@ -1,13 +1,13 @@
-const {
+import {
     createAudioPlayer,
     createAudioResource,
     getVoiceConnection,
     VoiceConnectionStatus,
-    StreamType,
-} = require('@discordjs/voice');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const say = require('say');
-const { createReadStream } = require('fs');
+} from '@discordjs/voice';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import say from 'say';
+import { CommandInteraction } from 'discord.js';
+import { VoiceConnection } from '@discordjs/voice';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,18 +25,18 @@ module.exports = {
                 .setDescription('The speed of the words')
                 .setRequired(false)
         ),
-    async execute(interaction) {
-        await interaction.reply(`Saying ${interaction.options.getString('words')}`);
-        const connection = getVoiceConnection(interaction.guild.id);
+    async execute(interaction: CommandInteraction) {
+        await interaction.followUp(`Saying ${interaction.options.getString('words')}`);
+        const connection: VoiceConnection | undefined = getVoiceConnection(String(interaction.guild?.id));
         try {
-            if (connection.status === VoiceConnectionStatus.Disconnected) {
-                return interaction.reply({ content: 'I am not connected to a voice channel', ephemeral: true });
+            if (connection?.state.status === VoiceConnectionStatus.Disconnected) {
+                return interaction.followUp({ content: 'I am not connected to a voice channel', ephemeral: true });
             }
         } catch (error) {
             console.error(error);
-            return interaction.reply('Unable to Speak');
+            return interaction.followUp('Unable to Speak');
         }
-        say.export(interaction.options.getString('words'), 'Microsoft Dan Desktop', interaction.options.getNumber('speed'), 'spoken.ogg', (err) => {
+        say.export(String(interaction.options.getString('words')), 'Microsoft Dan Desktop',Number(interaction.options.getNumber('speed')), 'spoken.ogg', (err) => {
             if (err) {
                 console.error(err);
             }
@@ -45,7 +45,7 @@ module.exports = {
             const resource = createAudioResource('spoken.ogg');
             const player = createAudioPlayer();
             player.play(resource);
-            connection.subscribe(player);
+            connection?.subscribe(player);
         });
     },
 };

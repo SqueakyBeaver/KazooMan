@@ -1,11 +1,11 @@
-const {
+import {
     joinVoiceChannel,
     createAudioPlayer,
     createAudioResource,
-} = require('@discordjs/voice');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const say = require('say');
-const fs = require('fs');
+} from '@discordjs/voice';
+import { SlashCommandBuilder } from '@discordjs/builders';
+import say from 'say';
+import { CommandInteraction } from 'discord.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -17,10 +17,11 @@ module.exports = {
                 .setDescription('The voice channel to join')
                 .setRequired(true)
         ),
-    async execute(interaction) {
-        await interaction.reply("All right!");
+    async execute(interaction: CommandInteraction) {
+        await interaction.followUp('All right!');
 
-        const channel = interaction.options.getChannel('voice_channel');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const channel: any = interaction.options.getChannel('voice_channel');
         const connection = joinVoiceChannel({
             channelId: channel.id,
             guildId: channel.guild.id,
@@ -28,9 +29,9 @@ module.exports = {
         });
 
         const player = createAudioPlayer();
-        say.export('Abrbrbrbrbrbrbbrbrbrbrbrbbr', 1.5, 'intro.wav', (err) => {
-            if (err) {
-                console.error(err);
+        say.export('Abrbrbrbrbrbrbbrbrbrbrbrbbr', undefined, 1.5, 'intro.wav', (_err) => {
+            if (_err) {
+                console.error(_err);
             }
         });
         const resource = createAudioResource('intro.wav');
