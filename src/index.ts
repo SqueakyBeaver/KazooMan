@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Client, Collection, Intents } from 'discord.js';
-import { token } from './token.json';
 import { readdirSync } from 'fs';
+import * as dotenv from 'dotenv';
+
+import { DBInstance } from './db/database';
 
 const bot = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
@@ -20,17 +22,19 @@ const bot = new Client({
 
 
 const commands = new Collection()
-    .set(require('./commands/beep.js').data.name, require('./commands/beep.js'))
-    .set(require('./commands/echo.js').data.name, require('./commands/echo.js'))
-    .set(require('./commands/join.js').data.name, require('./commands/join.js'))
-    .set(require('./commands/ping.js').data.name, require('./commands/ping.js'))
+    .set('beep', require('./commands/beep.js'))
+    .set('echo', require('./commands/echo.js'))
+    .set('join', require('./commands/join.js'))
+    .set('ping', require('./commands/ping.js'))
     .set('Report Message', require('./commands/report-message.js'))
-    .set(require('./commands/report-slash.js').data.name, require('./commands/report-slash.js'))
-    .set(require('./commands/speak.js').data.name, require('./commands/speak.js'))
-    .set(require('./commands/test_daily.js').data.name, require('./commands/test_daily.js'));
+    .set('report', require('./commands/report-slash.js'))
+    .set('speak', require('./commands/speak.js'))
+    .set('test_daily', require('./commands/test_daily.js'));
 
+const database = new DBInstance();
 
-export { bot, commands };
+export { bot, commands, database };
+
 if (require.main === module) {
     const eventFiles = readdirSync('gen/events').filter((file) =>
         file.endsWith('.js')
@@ -44,12 +48,11 @@ if (require.main === module) {
             bot.on(event.name, (...args) => event.execute(...args));
         }
     }
+    
+    database.init().then( _ => console.log('database initialized'));
 
     // require('./server')();
+    dotenv.config();
 
-    if (token === '') {
-        bot.login(process.env.TOKEN);
-    } else {
-        bot.login(token);
-    }
+    bot.login(process.env.TOKEN);
 }
