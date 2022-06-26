@@ -18,7 +18,7 @@ const bot = new Client({
     }
 });
 
-const commands = new Collection()
+const commands: Collection<string, unknown> = new Collection<string, unknown>()
     .set('beep', require('./commands/beep.js').beep)
     .set('echo', require('./commands/echo.js').echo)
     .set('join', require('./commands/join.js').join)

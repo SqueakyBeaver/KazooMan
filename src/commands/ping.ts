@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 
-exports = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('ping')
         .setDescription('See the ping of the bot.'),

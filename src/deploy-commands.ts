@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
+import { config } from 'dotenv';
 import { clientId, guildId } from './config.json';
 import { token } from './token.json';
 
@@ -15,12 +16,15 @@ const commands = [
     require('./commands/echo.js').data.toJSON(),
     require('./commands/join.js').data.toJSON(),
     require('./commands/ping.js').data.toJSON(),
-    require('./commands/report-message.js').data,
+    require('./commands/report-message.js').data.toJSON(),
     require('./commands/report-slash.js').data.toJSON(),
     require('./commands/speak.js').data.toJSON(),
     require('./commands/test_daily.js').data.toJSON(),
+    require('./commands/config.js').data.toJSON(),
 ];
 
+// temp fix?
+commands[8].type = 1;
 
 const rest = new REST({ version: '10' }).setToken(token);
 

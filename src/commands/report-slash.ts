@@ -5,7 +5,7 @@ import { CommandInteraction, MessageEmbed } from 'discord.js';
 
 import { bot } from '../index';
 
-exports = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('report')
         .setDescription('report a message or user')

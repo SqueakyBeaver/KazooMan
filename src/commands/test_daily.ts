@@ -4,7 +4,7 @@ import { MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { getDailyHolidays, getDailyQuote } from '../daily.js';
 
-exports = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('test_daily')
         .setDescription('Test Daily stuff'),

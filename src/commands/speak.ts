@@ -9,7 +9,7 @@ import say from 'say';
 import { CommandInteraction } from 'discord.js';
 import { VoiceConnection } from '@discordjs/voice';
 
-exports = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('speak')
         .setDescription('Make the bot say something in the voice channel')

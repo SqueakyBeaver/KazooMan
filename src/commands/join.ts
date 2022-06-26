@@ -7,7 +7,7 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import say from 'say';
 import { CommandInteraction } from 'discord.js';
 
-exports = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('join')
         .setDescription('Join a voice channel for tts')

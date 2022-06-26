@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js';
 import { commands } from '../index.js';
 
-exports = {
+module.exports = {
     name: 'interactionCreate',
     async execute(interaction: CommandInteraction) {    // Slash Command Handling
         console.log('handling interactions');

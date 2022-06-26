@@ -5,7 +5,7 @@ import { MessageContextMenuInteraction, MessageEmbed } from 'discord.js';
 
 import { bot } from '../index';
 
-exports = {
+module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Report Message')
         .setType(3)

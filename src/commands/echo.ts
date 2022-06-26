@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
 
-exports = {
+module.exports = {
     data: new SlashCommandBuilder()
         .setName('echo')
         .setDescription('Replies with your input!')

@@ -1,7 +1,7 @@
 // import { MessageEmbed, UserContextMenuInteraction } from 'discord.js';
 // import { bot } from '../index';
 
-// exports = {
+// module.exports
 //     data: {
 //         name: 'Report User',
 //         type: 2, // USER === 2
