@@ -23,7 +23,7 @@ export class DBInstance {
             _id: String,
             daily_channel: String,
             report_channel: String,
-            disabled_commands: Array<string>
+            disabled_commands: Array<string>()
         });
         this.GuildConfigs = mongoose.model('Guilds', this.guildSchema);
     }

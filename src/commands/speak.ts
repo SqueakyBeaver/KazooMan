@@ -9,7 +9,7 @@ import say from 'say';
 import { CommandInteraction } from 'discord.js';
 import { VoiceConnection } from '@discordjs/voice';
 
-module.exports = {
+exports = {
     data: new SlashCommandBuilder()
         .setName('speak')
         .setDescription('Make the bot say something in the voice channel')
@@ -25,7 +25,7 @@ module.exports = {
                 .setDescription('The speed of the words')
                 .setRequired(false)
         ),
-    async execute(interaction: CommandInteraction) {
+    async speak(interaction: CommandInteraction) {
         await interaction.followUp(`Saying ${interaction.options.getString('words')}`);
         const connection: VoiceConnection | undefined = getVoiceConnection(String(interaction.guild?.id));
         try {

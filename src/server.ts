@@ -5,6 +5,6 @@ import express from 'express';
 const app: express.Application = express();
 app.get('/', (_req: any, _res: any) => _res.send('Server is up.'));
 
-module.exports = () => {
+exports = () => {
     app.listen(3000);
 };

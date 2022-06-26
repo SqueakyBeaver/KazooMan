@@ -1,9 +1,9 @@
-import { Interaction } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { commands } from '../index.js';
 
-module.exports = {
+exports = {
     name: 'interactionCreate',
-    async execute(interaction: Interaction) {    // Slash Command Handling
+    async execute(interaction: CommandInteraction) {    // Slash Command Handling
         console.log('handling interactions');
         if (interaction.isCommand()) {
             await interaction.deferReply({ ephemeral: false }).catch(console.error);
@@ -24,8 +24,10 @@ module.exports = {
                 } else if (option.value) args.push(option.value);
             }
 
+
+
             try {
-                await cmd.execute(interaction);
+                await cmd(interaction);
             } catch (error) {
                 console.error(error);
                 await interaction.followUp({
@@ -43,8 +45,8 @@ module.exports = {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const cmd: any = commands.get(interaction.commandName);
             if (cmd) {
-                await cmd.execute(interaction);
+                await cmd(interaction);
             }
         }
-    },
+    }
 };

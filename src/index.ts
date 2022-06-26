@@ -18,18 +18,15 @@ const bot = new Client({
     }
 });
 
-// I find this easier to do than a for loop
-
-
 const commands = new Collection()
-    .set('beep', require('./commands/beep.js'))
-    .set('echo', require('./commands/echo.js'))
-    .set('join', require('./commands/join.js'))
-    .set('ping', require('./commands/ping.js'))
-    .set('Report Message', require('./commands/report-message.js'))
-    .set('report', require('./commands/report-slash.js'))
-    .set('speak', require('./commands/speak.js'))
-    .set('test_daily', require('./commands/test_daily.js'));
+    .set('beep', require('./commands/beep.js').beep)
+    .set('echo', require('./commands/echo.js').echo)
+    .set('join', require('./commands/join.js').join)
+    .set('ping', require('./commands/ping.js').ping)
+    .set('Report Message', require('./commands/report-message.js').report)
+    .set('report', require('./commands/report-slash.js').report)
+    .set('speak', require('./commands/speak.js').speak)
+    .set('test_daily', require('./commands/test_daily.js').testDaily);
 
 const database = new DBInstance();
 

@@ -4,11 +4,11 @@ import { MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { getDailyHolidays, getDailyQuote } from '../daily.js';
 
-module.exports = {
+exports = {
     data: new SlashCommandBuilder()
         .setName('test_daily')
         .setDescription('Test Daily stuff'),
-    async execute(interaction: any) {
+    async testDaily(interaction: any) {
         const send_date: any = new Date(Date.now() + 3600000 * -5);
 
         const holidays: any = await getDailyHolidays(

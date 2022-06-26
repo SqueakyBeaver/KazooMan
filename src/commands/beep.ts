@@ -1,11 +1,11 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
 
-module.exports = {
+exports = {
     data: new SlashCommandBuilder()
         .setName('beep')
         .setDescription('Replies with Boop!'),
-    async execute(interaction: CommandInteraction) {
+    async beep(interaction: CommandInteraction) {
         await interaction.followUp('Boop!');
         console.log(interaction.client.listeners('messageCreate'));
     },

@@ -31,7 +31,7 @@ async function send_it(client: Client) {
     }
 }
 
-module.exports = {
+exports = {
     name: 'ready',
     once: true,
     async execute(client: Client) {

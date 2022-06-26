@@ -5,13 +5,13 @@ import { MessageContextMenuInteraction, MessageEmbed } from 'discord.js';
 
 import { bot } from '../index';
 
-module.exports = {
+exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Report Message')
         .setType(3)
         .setDMPermission(false),
 
-    async execute(interaction: MessageContextMenuInteraction) {
+    async report(interaction: MessageContextMenuInteraction) {
         const user = interaction.targetMessage.author;
         const message = interaction.targetMessage.content;
         const report_embed = new MessageEmbed()
@@ -44,5 +44,5 @@ module.exports = {
             content: 'Your report has been sent to the moderators',
             ephemeral: true,
         });
-    },
+    }
 };
