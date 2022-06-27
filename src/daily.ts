@@ -93,7 +93,6 @@ export async function sendDailyMessages(client: Client, channel: TextChannel) {
         });
 
         channel.send({
-
             embeds: [
                 new MessageEmbed()
                     .setTitle(
