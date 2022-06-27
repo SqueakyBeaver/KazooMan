@@ -125,21 +125,7 @@ export async function reports(interaction: CommandInteraction) {
 export async function toggle(interaction: CommandInteraction) {
     if (!interaction.guild) return await interaction.followUp('This command is only available in servers!');
     
-    const disabled = (await database.getGuildInfo(String(interaction.guild?.id))).disabled;
-    const foundIndex = Number(disabled?.findIndex(element => 
-        element === String(interaction.options?.getString('command'))));
-    if (foundIndex >= 0) {
-        disabled?.splice(foundIndex, 1);
-
-        interaction.followUp(`${String(interaction.options?.getString('command'))} enabled`);
-    } else {
-        disabled?.push(String(interaction.options?.getString('command')));
-
-        await interaction.followUp(`${String(interaction.options?.getString('command'))} disabled`);
-    }
-
-    await database.writeConfig({
-        id: interaction.guild?.id,
-        disabled: disabled
-    });
+    return await interaction.followUp(
+        'Please use Discord\'s builtin slash command permission system\n' +
+        'https://support.discord.com/hc/en-us/articles/4644915651095-Command-Permissions');
 }

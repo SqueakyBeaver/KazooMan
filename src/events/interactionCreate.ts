@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js';
-import { commandsList } from '../index.js';
+import { commandsList, database } from '../index.js';
 
 module.exports = {
     name: 'interactionCreate',
