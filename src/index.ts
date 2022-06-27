@@ -57,5 +57,10 @@ if (require.main === module) {
     // require('./server')();
     dotenv.config();
 
-    bot.login(process.env.TOKEN);
+    bot.login(process.env.TOKEN)
+        .then(_ => console.log(clc.cyan('Logged in')))
+        .catch(err => {
+            console.error(err);
+            process.exit(1);
+        });
 }
