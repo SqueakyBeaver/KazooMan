@@ -39,6 +39,14 @@ export const commandsList: Collection<string, string> = new Collection<string, s
 export const database = new DBInstance();
 
 if (require.main === module) {
+    dotenv.config();
+
+    bot.login(process.env.TOKEN)
+        .then(_ => console.log(clc.cyan('Logged in')))
+        .catch(err => {
+            console.error(err);
+            process.exit(1);
+        });
     const eventFiles = readdirSync('gen/events').filter((file) =>
         file.endsWith('.js')
     );
@@ -55,12 +63,4 @@ if (require.main === module) {
     database.init().then( _ => console.log(clc.green('Database initialized')));
 
     // require('./server')();
-    dotenv.config();
-
-    bot.login(process.env.TOKEN)
-        .then(_ => console.log(clc.cyan('Logged in')))
-        .catch(err => {
-            console.error(err);
-            process.exit(1);
-        });
 }
