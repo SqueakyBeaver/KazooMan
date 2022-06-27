@@ -1,9 +1,10 @@
 // TODO: INTEGRATE A SERVER-SPECIFIC DATABASE
 
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
+import clc from 'cli-color';
 import { MessageContextMenuInteraction, MessageEmbed } from 'discord.js';
 
-import { bot } from '../index.js';
+import { bot, database } from '../index.js';
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
@@ -24,25 +25,28 @@ module.exports = {
             
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let report_channel: any = interaction.channel;
-        if ('767843340137529394' == interaction.guild?.id) {
-            report_channel = await bot.channels.cache.get('968670619371716628');
-        } else {
+
+        // Personal testing server
+        if ('637316662801989658' == interaction.guild?.id) {
             report_channel = interaction.channel;
+        } else {
+            report_channel = 
+                bot.channels.fetch(String((await database.getGuildInfo(String(interaction.guild?.id))).reports))
+                    .then().catch(_ => console.error(clc.red('no channel')));
         }
-            
-        await report_channel.send({ embeds: [report_embed] });
-        const me = await bot.users.fetch('557273716782923820');
-        await me.send({
-            embeds: [
-                report_embed.addField(
-                    'Sent By',
-                    `${interaction.user.username}#${interaction.user.discriminator}`
-                ),
-            ],
-        });
-        await interaction.followUp({
-            content: 'Your report has been sent to the moderators',
-            ephemeral: true,
-        });
+        try {
+            report_channel.send({ embeds: [report_embed] });
+            const me = await bot.users.fetch('557273716782923820');
+            me.send({ embeds: 
+                [report_embed.addField('Sent By', `${interaction.user.username}#${interaction.user.discriminator}`)]
+            });
+
+            interaction.followUp({ content: 'Your report has been sent to the moderators', ephemeral: true });
+        } catch {
+            return await interaction.followUp({
+                content: 'Reports are not set up in this server. Plrease contact the admins',
+                ephemeral: true,
+            });
+        }
     }
 };
