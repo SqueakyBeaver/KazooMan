@@ -2,10 +2,11 @@
 import { Client, Collection, Intents } from 'discord.js';
 import { readdirSync } from 'fs';
 import * as dotenv from 'dotenv';
+import clc from 'cli-color';
 
-import { DBInstance } from './db/database';
+import { DBInstance } from './db/database.js';
 
-const bot = new Client({
+export const bot = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
     presence: {
         status: 'online',
@@ -18,19 +19,24 @@ const bot = new Client({
     }
 });
 
-const commands: Collection<string, unknown> = new Collection<string, unknown>()
-    .set('beep', require('./commands/beep.js').beep)
-    .set('echo', require('./commands/echo.js').echo)
-    .set('join', require('./commands/join.js').join)
-    .set('ping', require('./commands/ping.js').ping)
-    .set('Report Message', require('./commands/report-message.js').report)
-    .set('report', require('./commands/report-slash.js').report)
-    .set('speak', require('./commands/speak.js').speak)
-    .set('test_daily', require('./commands/test_daily.js').testDaily);
+export const commandsList: Collection<string, string> = new Collection<string, string>()
+    // In the interaction handler, we will do some fancy stuff
+    // Split vals by space, require file, exec function
+    // Normal slash commands
+    .set('beep', './commands/beep.js beep')
+    .set('echo', './commands/echo.js echo')
+    .set('join', './commands/join.js join')
+    .set('ping', './commands/ping.js ping')
+    .set('report', './commands/report-slash.js report')
+    .set('speak', './commands/speak.js speak')
+    .set('test_daily', './commands/test_daily.js testDaily')
+    // Context menus
+    .set('Report Message', './commands/report-message.js report')
+    // Subcommands; in interaction handler, we will 
+    // select the function with the name of the subcommand
+    .set('config', './commands/config.js');
 
-const database = new DBInstance();
-
-export { bot, commands, database };
+export const database = new DBInstance();
 
 if (require.main === module) {
     const eventFiles = readdirSync('gen/events').filter((file) =>
@@ -46,7 +52,7 @@ if (require.main === module) {
         }
     }
     
-    database.init().then( _ => console.log('database initialized'));
+    database.init().then( _ => console.log(clc.green('Database initialized')));
 
     // require('./server')();
     dotenv.config();

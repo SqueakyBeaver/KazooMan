@@ -3,7 +3,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 
-import { bot } from '../index';
+import { bot } from '../index.js';
 
 module.exports = {
     data: new SlashCommandBuilder()

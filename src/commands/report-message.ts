@@ -3,7 +3,7 @@
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
 import { MessageContextMenuInteraction, MessageEmbed } from 'discord.js';
 
-import { bot } from '../index';
+import { bot } from '../index.js';
 
 module.exports = {
     data: new ContextMenuCommandBuilder()

@@ -33,8 +33,8 @@ export class DBInstance {
 
         this.GuildConfigs = mongoose.model('Guilds', this.guildSchema);
     }
-    async createConfig(guild: GuildData) {
-        this.GuildConfigs.create({
+    async writeConfig(guild: GuildData) {
+        await this.GuildConfigs.create({
             _id: guild.id,
             daily_channel: guild.daily_channel,
             report_channel: guild.report_channel,
@@ -42,4 +42,18 @@ export class DBInstance {
         });
 
     }
+
+    async getGuildInfo(id: string) {
+        const guild: any = await this.GuildConfigs.findById(id);
+        return guild._id;
+    }
 }
+
+// async function test() {
+//     const database = new DBInstance();
+//     await database.init();
+//     await database.createConfig(new GuildData('2234'));
+//     return database.getGuildInfo('2234');
+// }
+
+// test().then(console.log);

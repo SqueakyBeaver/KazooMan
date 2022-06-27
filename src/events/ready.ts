@@ -1,5 +1,6 @@
 import { Client, Collection, Message } from 'discord.js';
 import { sendDailyMessages } from '../daily.js';
+import clc from 'cli-color';
 
 async function send_it(client: Client) {
     // Testing
@@ -35,7 +36,7 @@ module.exports = {
     name: 'ready',
     once: true,
     async execute(client: Client) {
-        console.log(`Ready! Logged in as ${client.user?.tag}`);
+        console.log(clc.blue(`Ready! Logged in as ${client.user?.tag}`));
         setInterval(send_it, 600000, client);
     },
 };

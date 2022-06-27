@@ -4,14 +4,14 @@ import { REST } from '@discordjs/rest';
 import { Routes } from 'discord-api-types/v9';
 import { config } from 'dotenv';
 import { clientId, guildId } from './config.json';
-import { token } from './token.json';
+import * as dotenv from 'dotenv';
 
 // const commandFiles = readdirSync('src/commands').filter((file) =>
 //     file.endsWith('.js')
 // );
 
 // I find this easier to do than a for loop
-const commands = [
+const commandsList = [
     require('./commands/beep.js').data.toJSON(),
     require('./commands/echo.js').data.toJSON(),
     require('./commands/join.js').data.toJSON(),
@@ -24,18 +24,19 @@ const commands = [
 ];
 
 // temp fix?
-commands[8].type = 1;
+commandsList[8].type = 1;
 
-const rest = new REST({ version: '10' }).setToken(token);
+dotenv.config();
+const rest = new REST({ version: '10' }).setToken(String(process.env.TOKEN));
 
 async function testCommands() {
     try {
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-            body: commands,
+            body: commandsList,
         });
-        console.log(commands);
+        console.log(commandsList);
 
         return console.log('Successfully reloaded application (/) commands.');
     } catch (error) {
@@ -48,7 +49,7 @@ async function publishCommands() {
         console.log('Started refreshing application (/) commands.');
 
         await rest.put(Routes.applicationCommands(clientId), {
-            body: commands,
+            body: commandsList,
         });
 
         console.log('Successfully reloaded application (/) commands.');
