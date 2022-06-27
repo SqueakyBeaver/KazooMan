@@ -37,9 +37,11 @@ module.exports = {
         if ('637316662801989658' == interaction.guild?.id) {
             report_channel = interaction.channel;
         } else {
+            const channel_id = String((await database.getGuildInfo(String(interaction.guild?.id))).reports);
             report_channel = 
-                bot.channels.fetch(String((await database.getGuildInfo(String(interaction.guild?.id))).reports))
+                await bot.channels.fetch(channel_id)
                     .then().catch(_ => console.error(clc.red('no channel')));
+            console.log(channel_id);
         }
         try {
             report_channel.send({ embeds: [report_embed] });
