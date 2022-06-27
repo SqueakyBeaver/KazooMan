@@ -13,6 +13,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('speak')
         .setDescription('Make the bot say something in the voice channel')
+        .setDMPermission(false)
         .addStringOption((option) =>
             option
                 .setName('words')

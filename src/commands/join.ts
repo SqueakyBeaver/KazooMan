@@ -11,6 +11,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('join')
         .setDescription('Join a voice channel for tts')
+        .setDMPermission(false)
         .addChannelOption((option) =>
             option
                 .setName('voice_channel')

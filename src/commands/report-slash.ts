@@ -9,6 +9,7 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('report')
         .setDescription('report a message or user')
+        .setDMPermission(false)
         .addStringOption((option) =>
             option
                 .setName('desc')
