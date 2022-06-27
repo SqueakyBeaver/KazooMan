@@ -41,7 +41,6 @@ module.exports = {
             report_channel = 
                 await bot.channels.fetch(channel_id)
                     .then().catch(_ => console.error(clc.red('no channel')));
-            console.log(channel_id);
         }
         try {
             report_channel.send({ embeds: [report_embed] });
