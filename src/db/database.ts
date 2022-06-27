@@ -41,11 +41,11 @@ export class DBInstance {
             });
 
         } else {
-            guildRes.updateOne({
+            await guildRes.updateOne({
                 daily_channel: guild.daily,
                 report_channel: guild.reports,
                 disabled_commands: guild.disabled
-            }).exec();
+            });
         }
     }
 
@@ -60,13 +60,28 @@ export class DBInstance {
             disabled: res.disabled_commands
         };
     }
+
+    // trust me it'll maybe work
+    async filterGuildInfo(params: mongoose.FilterQuery<{[x:string]: any}>) {
+        console.log(params);
+        const ret: Array<GuildData> = [];
+        const res: any = await this.GuildConfigs.find(params);
+        for (const guild of res) {
+            ret.push({
+                id: guild._id,
+                daily: guild.daily_channel,
+                reports: guild.report_channel,
+                disabled: guild.disabled_commands
+            });
+        }
+        return ret;
+    }
 }
 
 // async function test() {
 //     const database = new DBInstance();
 //     await database.init();
-//     await database.createConfig(new GuildData('2234'));
-//     return database.getGuildInfo('2234');
+//     return database.filterGuildInfo({ daily_channel: {$regex: /^(?!\s*$).+/ } });
 // }
 
 // test().then(console.log);
