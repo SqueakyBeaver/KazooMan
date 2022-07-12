@@ -6,21 +6,15 @@
     "configurations": [
         
         {
-            "type": "pwa-node",
+            "type": "python",
             "request": "launch",
             "name": "Test Bot",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}\\gen\\index.js"
+            "program": "${workspaceFolder}\\src\\bot.py"
         },
         {
-            "type": "pwa-node",
+            "type": "python",
             "request": "launch",
             "name": "Run Current File",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
             "program": "${file}"
         }
     ]

@@ -1,0 +1,6 @@
+py-cord
+py-cord[voice]
+python-dotenv
+aiodns
+brotlipy
+orjson

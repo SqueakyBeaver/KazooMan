@@ -2,7 +2,8 @@ node_modules/
 gen/
 *.tsbuildinfo
 
-token.json
+**/__pycache__
+
 .env
 
 # repl.it stuff
