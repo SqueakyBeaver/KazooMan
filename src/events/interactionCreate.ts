@@ -1,12 +1,12 @@
-import { BaseCommandInteraction } from 'discord.js';
+import { ApplicationCommandOptionType, CommandInteraction, Interaction } from 'discord.js';
 import { commandsList, database } from '../index.js';
 
 module.exports = {
     name: 'interactionCreate',
-    async execute(interaction: BaseCommandInteraction) {    // Slash Command Handling
+    async execute(interaction: Interaction) {    // Slash Command Handling
         console.log('handling interactions');
 
-        if (interaction.isCommand() || interaction.isContextMenu()) {
+        if (interaction.isCommand() || interaction.isContextMenuCommand()) {
             await interaction.deferReply({ ephemeral: false }).catch(console.error);
 
             const cmdParts: string[] = String(commandsList.get(interaction.commandName)).split(' ');
@@ -17,8 +17,9 @@ module.exports = {
                 return interaction.followUp({ content: 'An error has occured ' });
             
 
-            for (const option of interaction.options.data) {
-                if (option.type === 'SUB_COMMAND') {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            for (const option of interaction.command!.options) {
+                if (option.type === ApplicationCommandOptionType.Subcommand) {
                     
                     //     if (option.name) {
                     //         args.push(option.name);

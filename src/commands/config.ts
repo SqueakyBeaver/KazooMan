@@ -1,5 +1,5 @@
 import { SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandBuilder } from '@discordjs/builders';
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 
 import { commandsList, database } from '../index';
 import { GuildData } from '../db/database';
@@ -62,7 +62,7 @@ export const data = new SlashCommandSubcommandGroupBuilder()
     .addSubcommand(toggleBuilder);
 
 
-export async function view(interaction: CommandInteraction) {
+export async function view(interaction: ChatInputCommandInteraction) {
     if (!interaction.guild) return await interaction.followUp('This command is only available in servers!');
     
     const guildInfo: GuildData = await database.getGuildInfo(String(interaction.guildId));
@@ -73,15 +73,14 @@ export async function view(interaction: CommandInteraction) {
     
     return await interaction.followUp({
         content: 'This server\'s configurations',
-        embeds: [ new MessageEmbed()
+        embeds: [ new EmbedBuilder()
             .setTitle(`Config for ${interaction.guild?.name}`)
             .setFooter({text: 'Ur mom is sus'})
-            .setColor('RANDOM')
             .setDescription(infoString).toJSON()
         ]});
 }
 
-export async function daily(interaction: CommandInteraction) {
+export async function daily(interaction: ChatInputCommandInteraction) {
     if (!interaction.guild) return await interaction.followUp('This command is only available in servers!');
     
     if (!interaction.options.getBoolean('enabled')) {
@@ -102,7 +101,7 @@ export async function daily(interaction: CommandInteraction) {
         
 }
 
-export async function reports(interaction: CommandInteraction) {
+export async function reports(interaction: ChatInputCommandInteraction) {
     if (!interaction.guild) return await interaction.followUp('This command is only available in servers!');
 
     if (!interaction.options.getBoolean('enabled')) {
@@ -122,7 +121,7 @@ export async function reports(interaction: CommandInteraction) {
         `Report messages will be sent to ${interaction.options.getChannel('channel')}`);
 }
 
-export async function toggle(interaction: CommandInteraction) {
+export async function toggle(interaction: ChatInputCommandInteraction) {
     if (!interaction.guild) return await interaction.followUp('This command is only available in servers!');
     
     return await interaction.followUp(

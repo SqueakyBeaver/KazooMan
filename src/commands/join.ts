@@ -5,7 +5,7 @@ import {
 } from '@discordjs/voice';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import say from 'say';
-import { CommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +18,7 @@ module.exports = {
                 .setDescription('The voice channel to join')
                 .setRequired(true)
         ),
-    async join(interaction: CommandInteraction) {
+    async join(interaction: ChatInputCommandInteraction) {
         await interaction.followUp('All right!');
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

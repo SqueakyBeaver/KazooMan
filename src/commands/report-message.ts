@@ -2,25 +2,24 @@
 
 import { ContextMenuCommandBuilder } from '@discordjs/builders';
 import clc from 'cli-color';
-import { MessageContextMenuInteraction, MessageEmbed } from 'discord.js';
+import { ApplicationCommandType, EmbedBuilder, MessageContextMenuCommandInteraction } from 'discord.js';
 
 import { bot, database } from '../index.js';
 
 module.exports = {
     data: new ContextMenuCommandBuilder()
         .setName('Report Message')
-        .setType(3)
+        .setType(ApplicationCommandType.Message)
         .setDMPermission(false),
 
-    async report(interaction: MessageContextMenuInteraction) {
+    async report(interaction: MessageContextMenuCommandInteraction) {
         const user = interaction.targetMessage.author;
         const message = interaction.targetMessage.content;
-        const report_embed = new MessageEmbed()
+        const report_embed = new EmbedBuilder()
             .setTitle('Message Report')
-            .addField('Message', `${message}`)
-            .addField(
-                'Reported User',
-                `${user.username}#${user.discriminator}`
+            .addFields([{name: 'Message', value:`${message}`},
+                {name: 'Reported User',
+                    value: `${user.username}#${user.discriminator}`}]
             );
             
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +38,8 @@ module.exports = {
             report_channel.send({ embeds: [report_embed] });
             const me = await bot.users.fetch('557273716782923820');
             me.send({ embeds: 
-                [report_embed.addField('Sent By', `${interaction.user.username}#${interaction.user.discriminator}`)]
+                [report_embed.addFields([{name: 'Sent By',
+                    value: `${interaction.user.username}#${interaction.user.discriminator}`}])]
             });
 
             interaction.followUp({ content: 'Your report has been sent to the moderators', ephemeral: true });

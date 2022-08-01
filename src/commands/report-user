@@ -1,4 +1,4 @@
-// import { MessageEmbed, UserContextMenuInteraction } from 'discord.js';
+// import { Embed, UserContextMenuInteraction } from 'discord.js';
 // import { bot } from '../index';
 
 // module.exports
@@ -11,7 +11,7 @@
 //     async execute(interaction: UserContextMenuInteraction) {
 //         const user = interaction.targetMessage.author;
 //         const message = interaction.targetMessage.cleanContent;
-//         const report_embed = new MessageEmbed()
+//         const report_embed = new Embed()
 //             .setTitle('Message Report')
 //             .addField('Message', `${message}`)
 //             .addField(

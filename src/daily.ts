@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { HTMLElement, parse } from 'node-html-parser';
-import { Client, MessageEmbed, TextChannel } from 'discord.js';
+import { Client, TextChannel } from 'discord.js';
+import { EmbedBuilder } from '@discordjs/builders';
 
 interface HolidayResult {
     link: string,
@@ -94,17 +95,17 @@ export async function sendDailyMessages(client: Client, channel: TextChannel) {
 
         channel.send({
             embeds: [
-                new MessageEmbed()
+                new EmbedBuilder()
                     .setTitle(
                         `Quote of the day for ${send_date.toDateString()}`
                     )
                     .setDescription(String(qotd.quote))
                     .setFooter({text: `By: ${qotd.author}`})
-                    .setColor('RANDOM'),
-                new MessageEmbed()
+                    .data,
+                new EmbedBuilder()
                     .setTitle(`Holidays for ${send_date.toDateString()}`)
                     .setDescription(holiday_str)
-                    .setColor('RANDOM'),
+                    .data
             ]
         })
             .then((message) => {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: REWORK THIS
-import { MessageEmbed } from 'discord.js';
+import { EmbedBuilder } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { getDailyHolidays, getDailyQuote } from '../daily.js';
 
@@ -28,16 +28,14 @@ module.exports = {
             holiday_str += `[${holiday.name}](<${holiday.link}>)\n`;
         });
 
-        const holidayEmbed = new MessageEmbed()
+        const holidayEmbed = new EmbedBuilder()
             .setTitle(`Holidays for ${send_date.toDateString()}`)
-            .setDescription(holiday_str)
-            .setColor('RANDOM');
+            .setDescription(holiday_str);
 
-        const quoteEmbed = new MessageEmbed()
+        const quoteEmbed = new EmbedBuilder()
             .setTitle(`Quote of the day for ${send_date.toDateString()}`)
             .setDescription(qotd.quote)
-            .setFooter(`By: ${qotd.author}`)
-            .setColor('RANDOM');
+            .setFooter({text: `By: ${qotd.author}`});
 
         await interaction.followUp({ embeds: [holidayEmbed, quoteEmbed] });
     },

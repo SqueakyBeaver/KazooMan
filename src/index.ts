@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Client, Collection, Intents } from 'discord.js';
+import { Client, Collection, ActivityType, GatewayIntentBits } from 'discord.js';
 import { readdirSync } from 'fs';
 import * as dotenv from 'dotenv';
 import clc from 'cli-color';
@@ -7,17 +7,13 @@ import clc from 'cli-color';
 import { DBInstance } from './db/database.js';
 
 export const bot = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
     presence: {
         status: 'online',
-        activities: [
-            {
-                name: 'HJONK',
-                type: 'PLAYING'
-            }
-        ]
     }
 });
+bot.user?.setActivity('HJONK', { type: ActivityType.Playing });
+
 
 export const commandsList: Collection<string, string> = new Collection<string, string>()
     // In the interaction handler, we will do some fancy stuff

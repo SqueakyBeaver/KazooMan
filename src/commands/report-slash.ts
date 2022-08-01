@@ -2,7 +2,7 @@
 
 import { SlashCommandBuilder } from '@discordjs/builders';
 import clc from 'cli-color';
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 
 import { bot, database } from '../index.js';
 
@@ -22,13 +22,13 @@ module.exports = {
                 .setName('user')
                 .setDescription('The user to report')
         ),
-    async report(interaction: CommandInteraction) {
+    async report(interaction: ChatInputCommandInteraction) {
         const user = interaction.options.getUser('user');
         const desc = interaction.options.getString('desc');
-        const report_embed = new MessageEmbed()
+        const report_embed = new EmbedBuilder()
             .setTitle('Report')
-            .addField('Description', `${desc}`)
-            .addField('Reported User', `${user?.username}#${user?.discriminator}`);
+            .addFields([{name: 'Description', value: `${desc}` },
+                {name: 'Reported User', value: `${user?.username}#${user?.discriminator}`}]);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let report_channel: any = interaction.channel;
@@ -45,7 +45,8 @@ module.exports = {
         try {
             report_channel.send({ embeds: [report_embed] });
             const me = await bot.users.fetch('557273716782923820');
-            me.send({ embeds: [report_embed.addField('Sent By', `${interaction.user.username}#${interaction.user.discriminator}`)] });
+            me.send({ embeds: [report_embed.addFields([{name: 'Sent By',
+                value: `${interaction.user.username}#${interaction.user.discriminator}`}])] });
 
             interaction.followUp({ content: 'Your report has been sent to the moderators', ephemeral: true });
         } catch {
