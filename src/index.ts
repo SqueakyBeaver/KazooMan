@@ -7,11 +7,7 @@ import clc from 'cli-color';
 import { DBInstance } from './db/database.js';
 
 export const bot = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates],
-    presence: {
-        status: 'online',
-    }
-});
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
 bot.user?.setActivity('HJONK', { type: ActivityType.Playing });
 
 
@@ -37,6 +33,8 @@ export const database = new DBInstance();
 if (require.main === module) {
     dotenv.config();
 
+    database.init().then( _ => console.log(clc.green('Database initialized')));
+
     bot.login(process.env.TOKEN)
         .then(_ => console.log(clc.cyan('Logged in')))
         .catch(err => {
@@ -55,8 +53,5 @@ if (require.main === module) {
             bot.on(event.name, (...args) => event.execute(...args));
         }
     }
-    
-    database.init().then( _ => console.log(clc.green('Database initialized')));
-
     // require('./server')();
 }

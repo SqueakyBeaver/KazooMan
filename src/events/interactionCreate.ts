@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, CommandInteraction, Interaction } from 'discord.js';
+import { ApplicationCommandOptionType, Interaction } from 'discord.js';
 import { commandsList, database } from '../index.js';
 
 module.exports = {
@@ -17,8 +17,8 @@ module.exports = {
                 return interaction.followUp({ content: 'An error has occured ' });
             
 
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            for (const option of interaction.command!.options) {
+            // eslint-disable-next-line no-unsafe-optional-chaining
+            for (const option of interaction.options.data) {
                 if (option.type === ApplicationCommandOptionType.Subcommand) {
                     
                     //     if (option.name) {
