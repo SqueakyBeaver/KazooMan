@@ -9,6 +9,17 @@ from discord.ext import commands
 from discord.commands import option
 
 
+class CodeModal(discord.ui.Modal):
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            discord.ui.InputText(
+                label="Code",
+                placeholder="print(\"Hello world\")"
+            ),
+            *args,
+            **kwargs)
+
+
 class Dev(commands.Cog):
     def __init__(self, bot: discord.Bot):
         self.bot = bot
@@ -20,8 +31,9 @@ class Dev(commands.Cog):
             return False
         return True
 
-    @discord.slash_command(name="eval", description="Evaluate code on the bot")
-    @option("code", str, description="Code to evaluate")
+    @ discord.slash_command(name="eval",
+                            description="Evaluate code on the bot")
+    @ option("code", str, description="Code to evaluate")
     async def eval(self, ctx: discord.ApplicationContext, code: str):
 
         # set some variables to make it easier to eval code
@@ -69,8 +81,8 @@ class Dev(commands.Cog):
             else:
                 return await ctx.respond(f"```py\n{value}\n{ret}```")
 
-    @discord.slash_command(name="reload", description="Reload cog(s)")
-    @option("cog", str, description="Cog to reload", required=False)
+    @ discord.slash_command(name="reload", description="Reload cog(s)")
+    @ option("cog", str, description="Cog to reload", required=False)
     async def reload(self, ctx: discord.ApplicationContext, cog: str = None):
         with open("src/cogs.json", "rb") as f:
             cogs_list = orjson.loads(f.read())["cogs"]
