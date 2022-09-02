@@ -9,41 +9,27 @@ from discord.ext import commands
 from discord.commands import option
 
 
+# The Modal sent when using the eval command
 class CodeModal(discord.ui.Modal):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, ctx: discord.ApplicationContext, *args, **kwargs):
         super().__init__(
-            discord.ui.InputText(
-                label="Code",
-                placeholder="print(\"Hello world\")"
-            ),
             *args,
             **kwargs)
+        self.ctx = ctx
 
+    async def callback(self, interaction: discord.Interaction):
+        await interaction.response.send_message("Running code...")
+        # Get the code that was inputed (pls work)
+        code = interaction.data['components'][0]['components'][0]['value']
 
-class Dev(commands.Cog):
-    def __init__(self, bot: discord.Bot):
-        self.bot = bot
-        print("Loaded dev cog")
-
-    async def cog_check(self, ctx: discord.ApplicationContext):
-        if ctx.author.id == self.bot.owner_id:
-            await ctx.respond("Don't even think about it")
-            return False
-        return True
-
-    @ discord.slash_command(name="eval",
-                            description="Evaluate code on the bot")
-    @ option("code", str, description="Code to evaluate")
-    async def eval(self, ctx: discord.ApplicationContext, code: str):
-
-        # set some variables to make it easier to eval code
+        # ngl don't know how this works
         env = {
-            "bot": self.bot,
-            "ctx": ctx,
-            "channel": ctx.channel,
-            "author": ctx.author,
-            "guild": ctx.guild,
-            "message": ctx.message,
+            "bot": self.ctx.bot,
+            "ctx": self.ctx,
+            "channel": self.ctx.channel,
+            "author": self.ctx.author,
+            "guild": self.ctx.guild,
+            "message": self.ctx.message,
         }
         # also add the globals
         env.update(globals())
@@ -59,7 +45,7 @@ class Dev(commands.Cog):
         try:
             exec(to_run, env)
         except Exception as e:
-            return await ctx.respond(f"Error:\n```py\n{e.__clas__.__name__}: {e}```")
+            return await self.ctx.respond(f"Error:\n```py\n{e.__clas__.__name__}: {e}```")
 
         func = env["func"]
 
@@ -70,16 +56,38 @@ class Dev(commands.Cog):
         except Exception:
             # Get the contents of stdout
             value = stdout.getvalue()
-            return await ctx.respond(f"```py\n{value}{traceback.format_exc()}```")
+            return await self.ctx.respond(f"```py\n{value}{traceback.format_exc()}```")
         else:
             value = stdout.getvalue()
 
             if ret is None:
                 if value:
-                    return await ctx.respond(f"```py\n{value}```")
+                    return await self.ctx.respond(f"```py\n{value}```")
 
             else:
-                return await ctx.respond(f"```py\n{value}\n{ret}```")
+                return await self.ctx.respond(f"```py\n{value}\n{ret}```")
+
+
+class Dev(commands.Cog):
+    def __init__(self, bot: discord.Bot):
+        self.bot = bot
+        print("Loaded dev cog")
+
+    async def cog_check(self, ctx: discord.ApplicationContext):
+        if ctx.author.id == self.bot.owner_id:
+            await ctx.respond("Don't even think about it")
+            return False
+        return True
+
+    @ discord.slash_command(name="eval",
+                            description="Evaluate code on the bot")
+    # @ option("code", str, description="Code to evaluate")
+    async def eval(self, ctx: discord.ApplicationContext, code: str):
+        codeIn = discord.ui.InputText(
+            style=discord.InputTextStyle.long, label="Code input")
+
+        return await ctx.send_modal(CodeModal(ctx, codeIn, title="Code to Evaluate"))
+        # set some variables to make it easier to eval code
 
     @ discord.slash_command(name="reload", description="Reload cog(s)")
     @ option("cog", str, description="Cog to reload", required=False)
