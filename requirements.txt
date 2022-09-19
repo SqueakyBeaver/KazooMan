@@ -4,3 +4,4 @@ python-dotenv
 aiodns
 brotlipy
 orjson
+bs4

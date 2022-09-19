@@ -113,5 +113,5 @@ class Dev(commands.Cog):
         return await ctx.respond(f"Successfully reloaded the `{cog.lower()}` cog", ephemeral=True)
 
 
-def setup(bot):
+def setup(bot: discord.Bot):
     bot.add_cog(Dev(bot))

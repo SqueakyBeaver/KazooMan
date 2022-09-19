@@ -3,7 +3,10 @@ from discord.ext import commands
 
 
 class Misc(commands.Cog):
-    def __init__(self, bot: discord.Bot):
+    def __init__(self, bot: discord.Bot, *args, **kwargs):
+        super().__init__(
+            *args,
+            **kwargs)
         self.bot = bot  # So we have a copy of the bot object
         print("loaded misc cog")
 
@@ -21,5 +24,5 @@ class Misc(commands.Cog):
         await ctx.respond(f"Saying {content}", ephemeral=True)
 
 
-def setup(bot):
+def setup(bot: discord.Bot):
     bot.add_cog(Misc(bot))
