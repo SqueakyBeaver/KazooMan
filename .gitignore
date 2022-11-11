@@ -10,3 +10,5 @@ gen/
 .replit
 replit.nix
 .breakpoints
+
+discord.log

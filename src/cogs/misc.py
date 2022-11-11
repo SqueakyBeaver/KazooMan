@@ -26,3 +26,4 @@ class Misc(commands.Cog):
 
 def setup(bot: discord.Bot):
     bot.add_cog(Misc(bot))
+    print("Loaded Misc Cog")

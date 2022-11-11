@@ -115,3 +115,4 @@ class Dev(commands.Cog):
 
 def setup(bot: discord.Bot):
     bot.add_cog(Dev(bot))
+    print("Loaded Dev Cog")

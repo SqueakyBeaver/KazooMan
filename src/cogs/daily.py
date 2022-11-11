@@ -48,3 +48,4 @@ class Daily(commands.Cog):
 
 def setup(bot: discord.Bot):
     bot.add_cog(Daily(bot))
+    print("Loaded Daily Cog")
